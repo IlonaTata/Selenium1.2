@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class SeleniumTest {
 
-   private  WebDriver driver;
+    private WebDriver driver;
 
     @BeforeAll
     static void setupAll() {
@@ -37,13 +37,23 @@ public class SeleniumTest {
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79057894561");
         driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
         driver.findElement(By.cssSelector("button")).click();
-        String expected="Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual= driver.findElement(By.cssSelector("[data-test-id=order-success")).getText().trim();
+        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        String actual = driver.findElement(By.cssSelector("[data-test-id=order-success")).getText().trim();
         Assertions.assertEquals(expected, actual);
-
-
-
 
     }
 
+    @Test
+    void shouldTestWithBug() throws InterruptedException {
+        driver.get("http://localhost:9999");
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Ivanov Ivan");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79057894561");
+        driver.findElement(By.cssSelector("[data-test-id=agreement]")).click();
+        driver.findElement(By.cssSelector("button")).click();
+        String expected = "Фамилия и имя\n" +
+                "Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.";
+        String actual = driver.findElement(By.className("input_invalid")).getText().trim();
+        Assertions.assertEquals(expected, actual);
+
+    }
 }
