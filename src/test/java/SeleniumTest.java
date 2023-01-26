@@ -19,11 +19,10 @@ public class SeleniumTest {
     @BeforeEach
     void setup() {
         ChromeOptions options = new ChromeOptions();
-        driver = new ChromeDriver(options);
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-
+        driver = new ChromeDriver(options);
 
     }
 
@@ -34,7 +33,7 @@ public class SeleniumTest {
     }
 
     @Test
-    void shouldTest()  {
+    void shouldTest() {
         driver.get("http://localhost:9999");
         driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Иванов Иван");
         driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79057894561");
@@ -45,7 +44,6 @@ public class SeleniumTest {
         Assertions.assertEquals(expected, actual);
 
     }
-
 
 
 }
